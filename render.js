@@ -47,7 +47,7 @@ function main() {
             projMat = mat4.create();
             gl.uniformMatrix4fv (projUnif, false, projMat);
             viewMat = mat4.lookAt(mat4.create(),
-                vec3.fromValues (0, -4, 0),  // eye coord
+                vec3.fromValues (0, -1, 0),  // eye coord
                 vec3.fromValues (0, 0, 0),  // gaze point
                 vec3.fromValues (0, 0, 1)   // Z is up
             );
@@ -80,10 +80,34 @@ function createObject() {
     let blinky = new Ghost(gl, {
         radius: 0.25,
         numTails: 4,
-        color: vec3.fromValues(255/255, 0/255, 0/255)
+        color: vec3.fromValues(208/255, 62/255, 25/255)
     });
 
-    allObjs.push(blinky);
+    let pinky = new Ghost(gl, {
+        radius: 0.25,
+        numTails: 3,
+        color: vec3.fromValues(234/255, 130/255, 229/255)
+    });
+    mat4.translate(pinky.coordFrame, pinky.coordFrame,
+        vec3.fromValues(0, 0.75, 0));
+
+    let inky = new Ghost(gl, {
+        radius: 0.25,
+        numTails: 4,
+        color: vec3.fromValues(70/255, 191/255, 238/255)
+    });
+    mat4.translate(inky.coordFrame, inky.coordFrame,
+        vec3.fromValues(0, 1.5, 0));
+
+    let clyde = new Ghost(gl, {
+        radius: 0.25,
+        numTails: 3,
+        color: vec3.fromValues(219/255, 133/255, 28/255)
+    });
+    mat4.translate(clyde.coordFrame, clyde.coordFrame,
+        vec3.fromValues(0, 2.25, 0));
+
+    allObjs.push(blinky, pinky, inky, clyde);
 }
 
 function resizeWindow() {
