@@ -35,7 +35,7 @@ class Ghost extends ObjectGroup {
         mat4.translate(leftEyeWhite.coordFrame, leftEyeWhite.coordFrame,
             vec3.fromValues(0, 0, 0.5 * props.radius));
         mat4.rotateZ(leftEyeWhite.coordFrame, leftEyeWhite.coordFrame,
-            glMatrix.toRadian(-20));
+            glMatrix.toRadian(20));
         mat4.translate(leftEyeWhite.coordFrame, leftEyeWhite.coordFrame,
             vec3.fromValues(props.radius - props.radius / 8, 0, 0));
         this.group.push(leftEyeWhite);
@@ -62,7 +62,7 @@ class Ghost extends ObjectGroup {
         mat4.translate(rightEyeWhite.coordFrame, rightEyeWhite.coordFrame,
             vec3.fromValues(0, 0, 0.5 * props.radius));
         mat4.rotateZ(rightEyeWhite.coordFrame, rightEyeWhite.coordFrame,
-            glMatrix.toRadian(20));
+            glMatrix.toRadian(-20));
         mat4.translate(rightEyeWhite.coordFrame, rightEyeWhite.coordFrame,
             vec3.fromValues(props.radius - props.radius / 8, 0, 0));
         this.group.push(rightEyeWhite);

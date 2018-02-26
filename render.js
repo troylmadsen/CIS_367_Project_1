@@ -47,8 +47,8 @@ function main() {
             projMat = mat4.create();
             gl.uniformMatrix4fv (projUnif, false, projMat);
             viewMat = mat4.lookAt(mat4.create(),
-                vec3.fromValues (0, -1, 0),  // eye coord
-                vec3.fromValues (0, 0, 0),  // gaze point
+                vec3.fromValues (1.125, -3, 0),  // eye coord
+                vec3.fromValues (1.125, 0, 0),  // gaze point
                 vec3.fromValues (0, 0, 1)   // Z is up
             );
             gl.uniformMatrix4fv (viewUnif, false, viewMat);
