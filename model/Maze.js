@@ -5,10 +5,8 @@
 
     /**
      * Creates a maze from the specified maze file. Walls will be constructed for each '1'
-     * and open space will be left for each '0'. Pacman will get placed at 'P' where 'P'
-     * is assumed to be open space. Each Ghost will be placed at the first available 'G'
-     * in the order Blinky, Pinky, Inky, Clyde. A '<' and '>' will be used to represent the
-     * teleport part of the maze.
+     * and open space will be left for each '0'. A portal is placed at 'P' rotated towards
+     * the edge of the maze.
      *
      * @param gl (Object) the current WebGL context
      * @param props props with the following keys
@@ -39,7 +37,7 @@
                         bottomColor: vec3.fromValues(1.0, 1.0, 1.0)
                     });
                     mat4.translate(obj.coordFrame, obj.coordFrame,
-                        vec3.fromValues(col * props.radius * Math.sqrt(2), 0, -1 * row * props.radius * Math.sqrt(2)));
+                        this.getMazeVec3(row, col));
                     mat4.rotateZ(obj.coordFrame, obj.coordFrame, glMatrix.toRadian(45));
 
                     this.group.push(obj);
@@ -47,18 +45,42 @@
             }
         }
 
-        let obj = new PolygonalPrism(gl, {
-            topRadius: props.radius,
-            bottomRadius: props.radius,
-            numSides: 4,
-            height: props.radius * Math.sqrt(2),
-            topColor: vec3.fromValues(1.0, 0, 0),
-            bottomColor: vec3.fromValues(1.0, 0, 0)
-        });
-        mat4.translate(obj.coordFrame, obj.coordFrame,
-            vec3.fromValues(1 * props.radius * Math.sqrt(2), 0, -1 * 4 * props.radius * Math.sqrt(2)));
-        mat4.rotateZ(obj.coordFrame, obj.coordFrame, glMatrix.toRadian(45));
-        // this.group.push(obj);
+        for (let row = 0; row < this.maze.length; row++) {
+            for (let col = 0; col < this.maze[row].length; col++) {
+                if (this.maze[row][col] === 'P') {
+                    let portal = new Torus(gl, {
+                       majorRadius: this.radius / 2,
+                       minorRadius: this.radius / 6,
+                       majSubdiv: 20,
+                       minSubdiv: 20,
+                       topColor: vec3.fromValues(17/255, 255/255, 0),
+                       bottomColor: vec3.fromValues(1.0, 1.0, 1.0)
+                    });
+
+                    let angle;
+                    if (row === 0) {
+                        angle = 180;
+                    }
+                    else if (row === this.maze.length - 1) {
+                        angle = 0;
+                    }
+                    else if (col === 0) {
+                        angle = 90;
+                    }
+                    else {
+                        angle = 270;
+                    }
+
+                    mat4.translate(portal.coordFrame, portal.coordFrame,
+                        this.getMazeVec3(row, col));
+                    mat4.translate(portal.coordFrame, portal.coordFrame,
+                        vec3.fromValues(0, 0, 11 * this.radius / 16));
+                    mat4.rotateY(portal.coordFrame, portal.coordFrame, glMatrix.toRadian(angle));
+
+                    this.group.push(portal);
+                }
+            }
+        }
     }
 
     /**
@@ -69,7 +91,7 @@
      * @returns (vec3) Vector
      */
     getMazeVec3(row, col) {
-        return vec3.fromValues(0, col * this.radius * Math.sqrt(2), -1 * row * this.radius * Math.sqrt(2));
+        return vec3.fromValues(col * this.radius * Math.sqrt(2), 0, -1 * row * this.radius * Math.sqrt(2));
     }
 
     /**
@@ -96,7 +118,7 @@
             [1, 1, 1, 1, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1],
             [1, 1, 1, 1, 1, 1, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1],
             [1, 1, 1, 1, 1, 1, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1],
-            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            ['P', 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'P'],
             [1, 1, 1, 1, 1, 1, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1],
             [1, 1, 1, 1, 1, 1, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1],
             [1, 1, 1, 1, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1],
