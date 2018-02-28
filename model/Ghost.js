@@ -8,7 +8,7 @@ class Ghost extends ObjectGroup {
      *
      * @param gl {Object} gl      the current WebGL context
      * @param props props with the following keys
-     *    required : radius (body radius), numTails (tails hanging below ghost)
+     *    required : radius (body radius), numTails (tails hanging below ghost. Even is 4, odd is 3)
      *    optional: color
      */
     constructor(gl, props) {
@@ -180,5 +180,8 @@ class Ghost extends ObjectGroup {
         // Rotating to face camera
         mat4.rotateZ(this.coordFrame, this.coordFrame,
             glMatrix.toRadian(-90));
+        // Shifting center up to fit within maze
+        mat4.translate(this.coordFrame, this.coordFrame,
+            vec3.fromValues(0, 0, 3 * props.radius / 2));
     }
 }
