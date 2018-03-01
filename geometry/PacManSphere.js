@@ -56,7 +56,6 @@ class PacManSphere extends Object3D {
                 vec3.lerp (blendColor, props.equatorColor, props.southColor, -zVal / this.RADIUS);
             if (Math.abs(zVal) < this.vtx[k][0] / Math.tan(glMatrix.toRadian(100 - props.mouthAngle))
                     && this.vtx[k][0] > 0) {
-                console.log(this.vtx[k]);
                 blendColor = vec3.fromValues(0, 0, 0);
             }
             colors.push(blendColor[0], blendColor[1], blendColor[2]);

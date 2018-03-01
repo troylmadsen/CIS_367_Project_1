@@ -95,6 +95,24 @@
     }
 
     /**
+     * Provides the width of the maze.
+     *
+     * @returns (int) Width of maze
+     */
+    getWidth() {
+        return this.maze[0].length * this.radius * Math.sqrt(2);
+    }
+
+    /**
+     * Provides the height of the maze.
+     *
+     * @returns (int) Height of maze
+     */
+    getHeight() {
+        return this.maze.length * this.radius * Math.sqrt(2);
+    }
+
+    /**
      * Loads in the maze from the specified file.
      *
      * @returns Array representation of the PacMan maze
