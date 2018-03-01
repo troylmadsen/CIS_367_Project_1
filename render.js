@@ -340,8 +340,6 @@ function handleClick(event) {
 }
 
 function handleSelect(event) {
-    console.log("select");
-
     // For a variety of optional objects to be moved. Uses the top menu.
     let ddl = document.getElementById("whichObject");
     let selectedValue = ddl.options[ddl.selectedIndex].value;
@@ -352,11 +350,14 @@ function handleSelect(event) {
         mat4.copy(viewMat, CAMERA_VIEW);
         mat4.copy(OBJ_CONSOLE.coordFrame, mat4.create());
     }
-    else if (selectedValue === "camera") {
+    else if (selectedValue === "console") {
         mat4.copy(viewMat, CAMERA_VIEW);
     }
-    else {
-
+    else if (selectedValue === "pacman") {
+        mat4.copy(viewMat, CAMERA_VIEW);
+    }
+    else if (selectedValue === "blinky") {
+        mat4.copy(viewMat, CAMERA_VIEW);
     }
 
     window.requestAnimFrame(drawScene);
