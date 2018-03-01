@@ -10,6 +10,10 @@ let projMat, viewMat;
 
 let scale = 0.05;
 
+let OBJ_CONSOLE;
+let OBJ_JOYSTICK;
+let OBJ_BLINKY;
+
 let CAMERA_VIEW = mat4.fromValues(
     0.9999695420265198, 0.0036164866760373116, -0.00727407680824399, 0,
     -0.007842056453227997, 0.66341632604599, -0.748216450214386 ,  0,
@@ -90,6 +94,10 @@ function createObjects() {
     let console = new GameConsole(gl, {
         scale: scale
     });
+
+    OBJ_CONSOLE = console;
+    OBJ_JOYSTICK = console.group[6];
+    OBJ_BLINKY = console.group[0].group[2];
 
     allObjs.push(console);
 }
@@ -198,34 +206,36 @@ function handleClick(event) {
     }
     
     // If camera is selected to move. 
-    else if (selectedValue === "camera") {
+    else if (selectedValue === "console") {
         
         // With the camera selected, the arrow keys and the "WASD" keys allow
         // the user to move the camera.
         switch (key) {
             case 87: // W
-                trans[14] = trans[14] + speed;
-                mat4.multiply(viewMat, trans, viewMat);
+                trans[13] = trans[13] + speed;
+                mat4.multiply(OBJ_CONSOLE.coordFrame, trans, OBJ_CONSOLE.coordFrame);
                 break;
             case 65: // A
                 deg = -1;
-                rot = mat4.fromValues(Math.cos(glMatrix.toRadian(deg)), 
-                    0, -1 * Math.sin(glMatrix.toRadian(deg)), 0, 0, 1, 0, 0, 
-                    Math.sin(glMatrix.toRadian(deg)), 0, 
-                    Math.cos(glMatrix.toRadian(deg)), 0, 0, 0, 0, 1);
-                mat4.multiply(viewMat, rot, viewMat);
+                rot = mat4.fromValues(Math.cos(glMatrix.toRadian(deg)),
+                    Math.sin(glMatrix.toRadian(deg)), 0, 0,
+                    -1 * Math.sin(glMatrix.toRadian(deg)),
+                    Math.cos(glMatrix.toRadian(deg)),
+                    0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
+                mat4.multiply(OBJ_CONSOLE.coordFrame, rot, OBJ_CONSOLE.coordFrame);
                 break;
             case 83: // S
-                trans[14] = trans[14] - speed;
-                mat4.multiply(viewMat, trans, viewMat);
+                trans[13] = trans[13] - speed;
+                mat4.multiply(OBJ_CONSOLE.coordFrame, trans, OBJ_CONSOLE.coordFrame);
                 break;
             case 68: // D
                 deg = 1;
-                rot = mat4.fromValues(Math.cos(glMatrix.toRadian(deg)), 
-                    0, -1 * Math.sin(glMatrix.toRadian(deg)), 0, 0, 1, 0, 0, 
-                    Math.sin(glMatrix.toRadian(deg)), 0, 
-                    Math.cos(glMatrix.toRadian(deg)), 0, 0, 0, 0, 1);
-                mat4.multiply(viewMat, rot, viewMat);
+                rot = mat4.fromValues(Math.cos(glMatrix.toRadian(deg)),
+                    Math.sin(glMatrix.toRadian(deg)), 0, 0,
+                    -1 * Math.sin(glMatrix.toRadian(deg)),
+                    Math.cos(glMatrix.toRadian(deg)),
+                    0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
+                mat4.multiply(OBJ_CONSOLE.coordFrame, rot, OBJ_CONSOLE.coordFrame);
                 break;
             case 38: // UP
                 deg = -1;
@@ -234,16 +244,15 @@ function handleClick(event) {
                     Math.sin(glMatrix.toRadian(deg)), 0, 0, 
                     -1 * Math.sin(glMatrix.toRadian(deg)), 
                     Math.cos(glMatrix.toRadian(deg)), 0, 0, 0, 0, 1);
-                mat4.multiply(viewMat, rot, viewMat);
+                mat4.multiply(OBJ_CONSOLE.coordFrame, rot, OBJ_CONSOLE.coordFrame);
                 break;
             case 37: // LEFT
                 deg = -1;
-                rot = mat4.fromValues(Math.cos(glMatrix.toRadian(deg)), 
-                    Math.sin(glMatrix.toRadian(deg)), 0, 0, 
-                    -1 * Math.sin(glMatrix.toRadian(deg)), 
-                    Math.cos(glMatrix.toRadian(deg)), 
-                    0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
-                mat4.multiply(viewMat, rot, viewMat);
+                rot = mat4.fromValues(Math.cos(glMatrix.toRadian(deg)),
+                    0, -1 * Math.sin(glMatrix.toRadian(deg)), 0, 0, 1, 0, 0,
+                    Math.sin(glMatrix.toRadian(deg)), 0,
+                    Math.cos(glMatrix.toRadian(deg)), 0, 0, 0, 0, 1);
+                mat4.multiply(OBJ_CONSOLE.coordFrame, rot, OBJ_CONSOLE.coordFrame);
                 break;
             case 40: // DOWN
                 deg = 1;
@@ -252,16 +261,15 @@ function handleClick(event) {
                     Math.sin(glMatrix.toRadian(deg)), 0, 0, 
                     -1 * Math.sin(glMatrix.toRadian(deg)), 
                     Math.cos(glMatrix.toRadian(deg)), 0, 0, 0, 0, 1);
-                    mat4.multiply(viewMat, rot, viewMat);
+                    mat4.multiply(OBJ_CONSOLE.coordFrame, rot, OBJ_CONSOLE.coordFrame);
                 break;
             case 39: // RIGHT
                 deg = 1;
-                rot = mat4.fromValues(Math.cos(glMatrix.toRadian(deg)), 
-                    Math.sin(glMatrix.toRadian(deg)), 0, 0, 
-                    -1 * Math.sin(glMatrix.toRadian(deg)), 
-                    Math.cos(glMatrix.toRadian(deg)), 
-                    0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
-                mat4.multiply(viewMat, rot, viewMat);
+                rot = mat4.fromValues(Math.cos(glMatrix.toRadian(deg)),
+                    0, -1 * Math.sin(glMatrix.toRadian(deg)), 0, 0, 1, 0, 0,
+                    Math.sin(glMatrix.toRadian(deg)), 0,
+                    Math.cos(glMatrix.toRadian(deg)), 0, 0, 0, 0, 1);
+                mat4.multiply(OBJ_CONSOLE.coordFrame, rot, OBJ_CONSOLE.coordFrame);
                 break;
         }
     
@@ -276,7 +284,6 @@ function handleClick(event) {
                 break;
             case 40: // DOWN
                 // TODO - move the character down one unit.
-                alert("Debugging. You hit down.");
                 break;
             case 37: // LEFT
                 // TODO - move the character left one unit.
@@ -297,7 +304,6 @@ function handleClick(event) {
                 break;
             case 40: // DOWN
                 // TODO - move the character down one unit.
-                alert("Debugging. You hit down.");
                 break;
             case 37: // LEFT
                 // TODO - move the character left one unit.
@@ -322,6 +328,7 @@ function handleSelect(event) {
 
     if (selectedValue === "none") {
         mat4.copy(viewMat, CAMERA_VIEW);
+        mat4.copy(OBJ_CONSOLE.coordFrame, mat4.create());
     }
     else if (selectedValue === "camera") {
         mat4.copy(viewMat, CAMERA_VIEW);
