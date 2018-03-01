@@ -22,9 +22,11 @@ class Joystick extends ObjectGroup {
             topColor: vec3.fromValues(208/255, 40/255, 15/255),
             bottomColor: vec3.fromValues(220/255, 60/255, 35/255)
         });
-        mat4.rotateZ(rightArrow.coordFrame, rightArrow.coordFrame, glMatrix.toRadian(-135));
+        mat4.rotateZ(rightArrow.coordFrame, rightArrow.coordFrame, 
+                glMatrix.toRadian(-135));
         mat4.translate(rightArrow.coordFrame, rightArrow.coordFrame,
-            vec3.fromValues(0.4 * props.scale, 0.0 * props.scale, 0.0 * props.scale));
+                vec3.fromValues(0.4 * props.scale, 0.0 * props.scale, 
+                0.0 * props.scale));
         this.group.push(rightArrow);
 
         // Up Arrow
@@ -36,9 +38,11 @@ class Joystick extends ObjectGroup {
             topColor: vec3.fromValues(208/255, 40/255, 15/255),
             bottomColor: vec3.fromValues(220/255, 60/255, 35/255)
         });
-        mat4.rotateZ(upArrow.coordFrame, upArrow.coordFrame, glMatrix.toRadian(-45));
+        mat4.rotateZ(upArrow.coordFrame, upArrow.coordFrame, 
+                glMatrix.toRadian(-45));
         mat4.translate(upArrow.coordFrame, upArrow.coordFrame,
-            vec3.fromValues(0.4 * props.scale, 0.0 * props.scale, 0.0 * props.scale));
+                vec3.fromValues(0.4 * props.scale, 0.0 * props.scale, 
+                0.0 * props.scale));
         this.group.push(upArrow);
 
         // Left Arrow
@@ -50,9 +54,11 @@ class Joystick extends ObjectGroup {
             topColor: vec3.fromValues(208/255, 40/255, 15/255),
             bottomColor: vec3.fromValues(220/255, 60/255, 35/255)
         });
-        mat4.rotateZ(leftArrow.coordFrame, leftArrow.coordFrame, glMatrix.toRadian(45));
+        mat4.rotateZ(leftArrow.coordFrame, leftArrow.coordFrame, 
+                glMatrix.toRadian(45));
         mat4.translate(leftArrow.coordFrame, leftArrow.coordFrame,
-            vec3.fromValues(0.4 * props.scale, 0.0 * props.scale, 0.0 * props.scale));
+                vec3.fromValues(0.4 * props.scale, 0.0 * props.scale, 
+                0.0 * props.scale));
         this.group.push(leftArrow);
 
         // Down Arrow
@@ -64,9 +70,11 @@ class Joystick extends ObjectGroup {
             topColor: vec3.fromValues(208/255, 40/255, 15/255),
             bottomColor: vec3.fromValues(220/255, 60/255, 35/255)
         });
-        mat4.rotateZ(downArrow.coordFrame, downArrow.coordFrame, glMatrix.toRadian(135));
+        mat4.rotateZ(downArrow.coordFrame, downArrow.coordFrame, 
+                glMatrix.toRadian(135));
         mat4.translate(downArrow.coordFrame, downArrow.coordFrame,
-            vec3.fromValues(0.4 * props.scale, 0.0 * props.scale, 0.0 * props.scale));
+                vec3.fromValues(0.4 * props.scale, 0.0 * props.scale, 
+                0.0 * props.scale));
         this.group.push(downArrow);
 
         // Backplate
@@ -78,9 +86,6 @@ class Joystick extends ObjectGroup {
             topColor: vec3.fromValues(.2, .2, .2),
             bottomColor: vec3.fromValues(.05, .05, .05)
         });
-        // mat4.translate(backPlate.coordFrame, backPlate.coordFrame,
-        //    vec3.fromValues(0, -0.1 * props.radius, 0.1 * props.radius));
-        // mat4.rotateX(backPlate.coordFrame, backPlate.coordFrame, glMatrix.toRadian(-20));
         this.group.push(backPlate);
 
         // Joystick Rod
@@ -93,8 +98,9 @@ class Joystick extends ObjectGroup {
             bottomColor: vec3.fromValues(.25, .25, .25)
         });
         mat4.translate(joystickRod.coordFrame, joystickRod.coordFrame,
-            vec3.fromValues(0, 0 * props.scale, 0.0 * props.scale));
-        mat4.rotateZ(joystickRod.coordFrame, joystickRod.coordFrame, glMatrix.toRadian(-90));
+                vec3.fromValues(0, 0 * props.scale, 0.0 * props.scale));
+        mat4.rotateZ(joystickRod.coordFrame, joystickRod.coordFrame, 
+                glMatrix.toRadian(-90));
         this.group.push(joystickRod);
 
         // Knob
