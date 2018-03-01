@@ -232,7 +232,13 @@ function handleClick(event) {
                 mat4.multiply(viewMat, rot, viewMat);
                 break;
             case 49: // "1"
-                
+                mat4.copy(viewMat, PACMAN_VIEW);
+                break;
+            case 50: // "2"
+                mat4.copy(viewMat, JOYSTICK_VIEW);
+                break;
+            case 51: // "3"
+                mat4.copy(viewMat, MAZE_VIEW);
                 break;
         }
     }
@@ -303,6 +309,15 @@ function handleClick(event) {
                     Math.cos(glMatrix.toRadian(deg)), 0, 0, 0, 0, 1);
                 mat4.multiply(OBJ_CONSOLE.coordFrame, rot, OBJ_CONSOLE.coordFrame);
                 break;
+            case 49: // "1"
+                mat4.copy(viewMat, PACMAN_VIEW);
+                break;
+            case 50: // "2"
+                mat4.copy(viewMat, JOYSTICK_VIEW);
+                break;
+            case 51: // "3"
+                mat4.copy(viewMat, MAZE_VIEW);
+                break;
         }
     
     // If Pacman is selected to move.
@@ -326,6 +341,17 @@ function handleClick(event) {
                 trans[12] = trans[12] + scale;
                 mat4.multiply(OBJ_PACMAN.coordFrame, trans, OBJ_PACMAN.coordFrame);
                 break;
+                
+            /* For the changing of camera view. */ 
+            case 49: // "1"
+                mat4.copy(viewMat, PACMAN_VIEW);
+                break;
+            case 50: // "2"
+                mat4.copy(viewMat, JOYSTICK_VIEW);
+                break;
+            case 51: // "3"
+                mat4.copy(viewMat, MAZE_VIEW);
+                break;
         }
     
     // If Blinky is selected to move.
@@ -348,6 +374,17 @@ function handleClick(event) {
             case 68: // D
                 trans[12] = trans[12] + scale;
                 mat4.multiply(OBJ_BLINKY.coordFrame, trans, OBJ_BLINKY.coordFrame);
+                break;
+            
+            /* For the changing of camera view. */    
+            case 49: // "1"
+                mat4.copy(viewMat, PACMAN_VIEW);
+                break;
+            case 50: // "2"
+                mat4.copy(viewMat, JOYSTICK_VIEW);
+                break;
+            case 51: // "3"
+                mat4.copy(viewMat, MAZE_VIEW);
                 break;
         }
     }
