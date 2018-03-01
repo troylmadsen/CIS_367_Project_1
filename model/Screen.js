@@ -56,6 +56,7 @@ class Screen extends ObjectGroup {
         mat4.translate(clyde.coordFrame, clyde.coordFrame,
             maze.getMazeVec3(4, 5));
 
+
         // Create a cherry object to add to the game.
         let cherry = new Cherries(gl, {
             radius: scale * Math.sqrt(2)
@@ -65,6 +66,7 @@ class Screen extends ObjectGroup {
         mat4.translate(cherry.coordFrame, cherry.coordFrame,
             vec3.fromValues(0, 0, -0.05));
 
+        // this.group.push(cherry);
         this.group.push(maze, pacman, blinky, pinky, inky, clyde, cherry);
 
         // Set origin of this to the center
