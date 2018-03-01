@@ -22,7 +22,7 @@ class Screen extends ObjectGroup {
             mouthAngle: 50
         });
         mat4.translate(pacman.coordFrame, pacman.coordFrame,
-            maze.getMazeVec3(4, 7));
+            maze.getMazeVec3(1, 7));
 
         let blinky = new Ghost(gl, {
             radius: props.scale,
@@ -30,7 +30,7 @@ class Screen extends ObjectGroup {
             color: vec3.fromValues(208/255, 62/255, 25/255)
         });
         mat4.translate(blinky.coordFrame, blinky.coordFrame,
-            maze.getMazeVec3(4, 2));
+            maze.getMazeVec3(1, 2));
 
         let pinky = new Ghost(gl, {
             radius: props.scale,
@@ -38,7 +38,7 @@ class Screen extends ObjectGroup {
             color: vec3.fromValues(234/255, 130/255, 229/255)
         });
         mat4.translate(pinky.coordFrame, pinky.coordFrame,
-            maze.getMazeVec3(4, 3));
+            maze.getMazeVec3(1, 3));
 
         let inky = new Ghost(gl, {
             radius: props.scale,
@@ -46,7 +46,7 @@ class Screen extends ObjectGroup {
             color: vec3.fromValues(70/255, 191/255, 238/255)
         });
         mat4.translate(inky.coordFrame, inky.coordFrame,
-            maze.getMazeVec3(4, 4));
+            maze.getMazeVec3(1, 4));
 
         let clyde = new Ghost(gl, {
             radius: props.scale,
@@ -54,17 +54,16 @@ class Screen extends ObjectGroup {
             color: vec3.fromValues(219/255, 133/255, 28/255)
         });
         mat4.translate(clyde.coordFrame, clyde.coordFrame,
-            maze.getMazeVec3(4, 5));
-
+            maze.getMazeVec3(1, 5));
 
         // Create a cherry object to add to the game.
         let cherry = new Cherries(gl, {
             radius: scale * Math.sqrt(2)
         });
         mat4.translate(cherry.coordFrame, cherry.coordFrame,
-            maze.getMazeVec3(4, 9));
+            maze.getMazeVec3(1, 9));
         mat4.translate(cherry.coordFrame, cherry.coordFrame,
-            vec3.fromValues(0, 0, -0.05));
+            vec3.fromValues(0, 0, props.radius * -0.2));
 
         this.group.push(maze, pacman, blinky, pinky, inky, clyde, cherry);
 

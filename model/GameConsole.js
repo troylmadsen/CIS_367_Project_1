@@ -41,7 +41,7 @@ class GameConsole extends ObjectGroup {
             numSides: 4,
             height: props.scale * 200,
             topColor: vec3.fromValues(1.0, 1.0, 0),
-            bottomColor: vec3.fromValues(1.0, 1.0, 0)
+            bottomColor: vec3.fromValues(0, 1.0, 1.0)
         });
         mat4.translate(body.coordFrame, body.coordFrame,
             vec3.fromValues(0, 0, props.scale * -200));
@@ -98,6 +98,20 @@ class GameConsole extends ObjectGroup {
         mat4.multiply(hood.coordFrame, hood.coordFrame, shearMat);
         this.group.push(hood);
 
-        
+        let joystick = new Joystick(gl, {
+            scale: props.scale * 10
+        });
+        mat4.translate(joystick.coordFrame, joystick.coordFrame,
+            vec3.fromValues(0, -50 * props.scale, -15 * props.scale));
+        mat4.rotateZ(joystick.coordFrame, joystick.coordFrame, glMatrix.toRadian(45));
+        this.group.push(joystick);
+
+        let button1 = new Button(gl, {
+            scale: scale * 1.5,
+            color: vec3.fromValues(1.0, 0, 0)
+        });
+        mat4.translate(button1.coordFrame, button1.coordFrame,
+            vec3.fromValues(props.scale * 10, props.scale * -40, props.scale * 0.5));
+        this.group.push(button1);
     }
 }
