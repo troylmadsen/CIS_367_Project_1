@@ -14,6 +14,10 @@ class Ghost extends ObjectGroup {
     constructor(gl, props) {
         super(gl);
 
+        const requiredProps = ['radius', 'numTails'];
+        if (!this._checkProperties(props, requiredProps))
+            throw "Ghost: missing required properties" + requiredProps;
+
         let head = new Sphere(gl, {
             radius: props.radius,
             splitDepth: 5,
@@ -177,9 +181,6 @@ class Ghost extends ObjectGroup {
 
         }
 
-        // Rotating to face camera
-        mat4.rotateZ(this.coordFrame, this.coordFrame,
-            glMatrix.toRadian(-90));
         // Shifting center up to fit within maze
         mat4.translate(this.coordFrame, this.coordFrame,
             vec3.fromValues(0, 0, 3 * props.radius / 2));
