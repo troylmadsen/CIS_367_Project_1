@@ -14,9 +14,9 @@ let OBJ_CONSOLE;
 let OBJ_PACMAN;
 let OBJ_BLINKY;
 
-let OBJ_CONSOLE_POS;
-let OBJ_PACMAN_POS;
-let OBJ_BLINKY_POS;
+let OBJ_CONSOLE_POS = mat4.create();
+let OBJ_PACMAN_POS = mat4.create();
+let OBJ_BLINKY_POS = mat4.create();
 
 let CAMERA_VIEW = mat4.fromValues(
     0.9999695420265198, 0.0036164866760373116, -0.00727407680824399, 0,
@@ -122,11 +122,11 @@ function createObjects() {
     });
 
     OBJ_CONSOLE = console;
-    OBJ_CONSOLE_POS = OBJ_CONSOLE.coordFrame;
+    mat4.copy(OBJ_CONSOLE_POS, OBJ_CONSOLE.coordFrame);
     OBJ_PACMAN = console.group[0].group[1];
-    OBJ_PACMAN_POS = OBJ_PACMAN.coordFrame;
+    mat4.copy(OBJ_PACMAN_POS, OBJ_PACMAN.coordFrame);
     OBJ_BLINKY = console.group[0].group[2];
-    OBJ_BLINKY_POS = OBJ_BLINKY.coordFrame;
+    mat4.copy(OBJ_BLINKY_POS, OBJ_BLINKY.coordFrame);
 
     allObjs.push(console);
 }
