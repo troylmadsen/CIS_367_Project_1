@@ -56,7 +56,14 @@ class Screen extends ObjectGroup {
         mat4.translate(clyde.coordFrame, clyde.coordFrame,
             maze.getMazeVec3(4, 5));
 
-        this.group.push(maze, pacman, blinky, pinky, inky, clyde);
+        // Create a cherry object to add to the game.
+        let cherry = new Cherries(gl, {
+            radius: scale * Math.sqrt(2)
+        });
+        mat4.translate(cherry.coordFrame, cherry.coordFrame,
+            maze.getExternalMazeVec3(4, 9));
+
+        this.group.push(maze, pacman, blinky, pinky, inky, clyde, cherry);
 
         // Set origin of this to the center
         mat4.translate(this.coordFrame, this.coordFrame,
