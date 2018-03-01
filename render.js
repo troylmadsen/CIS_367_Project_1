@@ -36,10 +36,10 @@ let JOYSTICK_VIEW = mat4.fromValues(
 );
 
 let MAZE_VIEW = mat4.fromValues(
-    0.9995627999305725, 0.005178545601665974, 0.029196280986070633, 0,
-    0.009842456318438053, 0.8708683848381042, -0.49143123626708984, 0,
-    -0.027971483767032623, 0.49149951338768005, 0.8704341053962708, 0,
-    0.042581282556056976, -2.1413490772247314, -4.3701300621032715, 1 
+    0.9999695420265198, 0.00516011705622077, -0.00627412274479866, 0,
+    -0.007842056453227997, 0.8147264719009399, -0.5798046588897705, 0,
+    0.0021192755084484816, 0.5798318386077881, 0.814740002155304, 0,
+    -0.09816265106201172, -1.6223222017288208, -4.817147731781006, 1
 );
 
 function main() {
@@ -380,23 +380,22 @@ function handleClick(event) {
 }
 
 function handleSelect(event) {
-    console.log("select");
-
     // For a variety of optional objects to be moved. Uses the top menu.
     let ddl = document.getElementById("whichObject");
     let selectedValue = ddl.options[ddl.selectedIndex].value;
-
-    console.log(selectedValue);
 
     if (selectedValue === "none") {
         mat4.copy(viewMat, CAMERA_VIEW);
         mat4.copy(OBJ_CONSOLE.coordFrame, mat4.create());
     }
-    else if (selectedValue === "camera") {
+    else if (selectedValue === "console") {
         mat4.copy(viewMat, CAMERA_VIEW);
     }
-    else {
-
+    else if (selectedValue === "pacman") {
+        mat4.copy(viewMat, MAZE_VIEW);
+    }
+    else if (selectedValue === "blinky") {
+        mat4.copy(viewMat, MAZE_VIEW);
     }
 
     window.requestAnimFrame(drawScene);
