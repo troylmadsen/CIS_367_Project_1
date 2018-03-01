@@ -396,7 +396,7 @@ function handleClick(event) {
  * Reset the position of the objects
  */
 function resetPos() {
-    mat4.copy(OBJ_CONSOLE.coordFrame, mat4.create());
+    mat4.copy(OBJ_CONSOLE.coordFrame, OBJ_CONSOLE_POS);
     mat4.copy(OBJ_PACMAN.coordFrame, OBJ_PACMAN_POS);
     mat4.copy(OBJ_BLINKY.coordFrame, OBJ_BLINKY_POS);
 }
