@@ -240,6 +240,9 @@ function handleClick(event) {
             case 51: // "3"
                 mat4.copy(viewMat, MAZE_VIEW);
                 break;
+            case 52: // "4"
+                mat4.copy(viewMat, CAMERA_VIEW);
+                break;
         }
     }
     
@@ -318,6 +321,9 @@ function handleClick(event) {
             case 51: // "3"
                 mat4.copy(viewMat, MAZE_VIEW);
                 break;
+            case 52: // "4"
+                mat4.copy(viewMat, CAMERA_VIEW);
+                break;
         }
     
     // If Pacman is selected to move.
@@ -352,6 +358,9 @@ function handleClick(event) {
             case 51: // "3"
                 mat4.copy(viewMat, MAZE_VIEW);
                 break;
+            case 52: // "4"
+                mat4.copy(viewMat, CAMERA_VIEW);
+                break;
         }
     
     // If Blinky is selected to move.
@@ -385,6 +394,9 @@ function handleClick(event) {
                 break;
             case 51: // "3"
                 mat4.copy(viewMat, MAZE_VIEW);
+                break;
+            case 52: // "4"
+                mat4.copy(viewMat, CAMERA_VIEW);
                 break;
         }
     }
