@@ -1,30 +1,27 @@
 /**
- * Created by Troy Madsen
+ * Created by Hans Dulimarta on 2/1/17.
  */
 class PacManSphere extends Object3D {
-    northColor = vec3.fromValues(Math.random(), Math.random(), Math.random());
-    equatorColor = vec3.fromValues(Math.random(), Math.random(), Math.random());
-    southColor = vec3.fromValues(Math.random(), Math.random(), Math.random());
-
     /**
      * Create a 3D sphere with tip at the Z+ axis and base on the XY plane
      * @param {Object} gl      the current WebGL context
      * @param props with the following keys
-     *    required : radius (sphere radius), splitDepth (recursion depth)
+     *    required : radius (sphere radius), splitDepth (recursion depth),
+     *              mouthAngle (0 to 50)
      *    optional: northColor, equatorColor, southColor
      */
     constructor (gl, props) {
         super(gl);
-        const requiredProps = ['radius', 'splitDepth'];
+        const requiredProps = ['radius', 'splitDepth', 'mouthAngle'];
         if (!this._checkProperties(props, requiredProps))
             throw "Sphere: missing required properties" + requiredProps;
         /* if colors are undefined, generate random colors */
-        if (typeof props.northColor !== "undefined")
-            this.northColor = props.northColor;
-        if (typeof props.equatorColor !== "undefined")
-            this.equatorColor = props.equatorColor;
-        if (typeof props.southColor !== "undefined")
-            this.southColor = props.southColor;
+        if (typeof props.northColor === "undefined")
+            props.northColor = vec3.fromValues(Math.random(), Math.random(), Math.random());
+        if (typeof props.equatorColor === "undefined")
+            props.equatorColor = vec3.fromValues(Math.random(), Math.random(), Math.random());
+        if (typeof props.southColor === "undefined")
+            props.southColor = vec3.fromValues(Math.random(), Math.random(), Math.random());
         let blendColor = vec3.create();
 
         this.RADIUS = props.radius;
@@ -54,9 +51,14 @@ class PacManSphere extends Object3D {
             vertices.push(this.vtx[k][0], this.vtx[k][1], this.vtx[k][2]);
             let zVal = this.vtx[k][2];
             if (zVal > 0)
-                vec3.lerp (blendColor, this.equatorColor, this.northColor, zVal / this.RADIUS);
+                vec3.lerp (blendColor, props.equatorColor, props.northColor, zVal / this.RADIUS);
             else
-                vec3.lerp (blendColor, this.equatorColor, this.southColor, -zVal / this.RADIUS);
+                vec3.lerp (blendColor, props.equatorColor, props.southColor, -zVal / this.RADIUS);
+            if (Math.abs(zVal) < this.vtx[k][0] / Math.tan(glMatrix.toRadian(100 - props.mouthAngle))
+                    && this.vtx[k][0] > 0) {
+                console.log(this.vtx[k]);
+                blendColor = vec3.fromValues(0, 0, 0);
+            }
             colors.push(blendColor[0], blendColor[1], blendColor[2]);
         }
         gl.bindBuffer(gl.ARRAY_BUFFER, this.vertexBuff);
@@ -68,26 +70,8 @@ class PacManSphere extends Object3D {
 
         let ibuff = gl.createBuffer();
         gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, ibuff);
-        gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, Uint16Array.from(this.idx), gl.STATIC_DRAW);
+        gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, Uint16Array.from(this.idx), gl.STATIC_DRAW)
         this.primitives.push({type: gl.TRIANGLES, buffer: ibuff, numPoints: this.idx.length});
-    }
-
-    color(angle) {
-        let blendColor = vec3.create();
-
-        for (let k = 0; k < this.vtx.length; k++)
-        {
-            let zVal = this.vtx[k][2];
-            if (zVal > 0)
-                vec3.lerp (blendColor, this.equatorColor, this.northColor, zVal / this.RADIUS);
-            else
-                vec3.lerp (blendColor, this.equatorColor, this.southColor, -zVal / this.RADIUS);
-            colors.push(blendColor[0], blendColor[1], blendColor[2]);
-        }
-
-        this.colorBuff = gl.createBuffer();
-        gl.bindBuffer(gl.ARRAY_BUFFER, this.colorBuff);
-        gl.bufferData(gl.ARRAY_BUFFER, Float32Array.from(colors), gl.STATIC_DRAW);
     }
 
     split (N, a, b, c) {

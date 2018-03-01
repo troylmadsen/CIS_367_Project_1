@@ -83,8 +83,11 @@ function createObjects() {
     });
 
     let pacman = new PacMan(gl, {
-        radius: scale
+        radius: scale,
+        mouthAngle: 50
     });
+    mat4.translate(pacman.coordFrame, pacman.coordFrame,
+        maze.getMazeVec3(4, 7));
 
     let blinky = new Ghost(gl, {
         radius: scale,
@@ -118,10 +121,7 @@ function createObjects() {
     mat4.translate(clyde.coordFrame, clyde.coordFrame,
         maze.getMazeVec3(4, 5));
 
-    allObjs.push(maze, blinky, pinky, inky, clyde);
-
-
-    // allObjs.push(pacman);
+    allObjs.push(maze, pacman, blinky, pinky, inky, clyde);
 }
 
 function resizeWindow() {
