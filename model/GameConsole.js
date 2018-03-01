@@ -107,11 +107,20 @@ class GameConsole extends ObjectGroup {
         this.group.push(joystick);
 
         let button1 = new Button(gl, {
-            scale: scale * 1.5,
+            scale: props.scale * 2,
             color: vec3.fromValues(1.0, 0, 0)
         });
         mat4.translate(button1.coordFrame, button1.coordFrame,
-            vec3.fromValues(props.scale * 10, props.scale * -40, props.scale * 0.5));
+            vec3.fromValues(props.scale * 20, props.scale * -50, props.scale * 0.5));
         this.group.push(button1);
+
+        let button2 = new Button(gl, {
+            scale: props.scale * 2,
+            color: vec3.fromValues(1.0, 1.0, 1.0)
+        });
+        mat4.copy(button2.coordFrame, button1.coordFrame);
+        mat4.translate(button2.coordFrame, button2.coordFrame,
+            vec3.fromValues(props.scale * 9, props.scale * 5, 0));
+        this.group.push(button2);
     }
 }

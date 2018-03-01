@@ -58,7 +58,7 @@ class Screen extends ObjectGroup {
 
         // Create a cherry object to add to the game.
         let cherry = new Cherries(gl, {
-            radius: scale * Math.sqrt(2)
+            radius: scale * Math.sqrt(2) * 100
         });
         mat4.translate(cherry.coordFrame, cherry.coordFrame,
             maze.getMazeVec3(1, 9));
