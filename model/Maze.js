@@ -95,6 +95,17 @@
     }
 
     /**
+     * Gets translation vector within the maze, translatable to external translation.
+     *
+     * @param row (int) Desired row
+     * @param col (int) Desired column
+     * @returns (vec3) Vector
+     */
+    getExternalMazeVec3(row, col) {
+        return vec3.fromValues(0, col * this.radius * Math.sqrt(2), -1 * row * this.radius * Math.sqrt(2));
+    }
+
+    /**
      * Loads in the maze from the specified file.
      *
      * @returns Array representation of the PacMan maze
