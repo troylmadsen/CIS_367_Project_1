@@ -66,7 +66,6 @@ class Screen extends ObjectGroup {
         mat4.translate(cherry.coordFrame, cherry.coordFrame,
             vec3.fromValues(0, 0, -0.05));
 
-        // this.group.push(cherry);
         this.group.push(maze, pacman, blinky, pinky, inky, clyde, cherry);
 
         // Set origin of this to the center
