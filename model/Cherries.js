@@ -18,7 +18,7 @@ class Cherries extends ObjectGroup {
             radius: props.radius * 0.4,
             splitDepth: 5,
             northColor: vec3.fromValues(208/255, 62/255, 25/255),
-            equatorColor: vec3.fromValues(208/255, 62/255, 25/255),
+            equatorColor: vec3.fromValues(208/255, 40/255, 15/255),
             southColor: vec3.fromValues(208/255, 62/255, 25/255)
         });
         mat4.translate(rightCherry.coordFrame, rightCherry.coordFrame,
@@ -30,7 +30,7 @@ class Cherries extends ObjectGroup {
             radius: props.radius * 0.3,
             splitDepth: 5,
             northColor: vec3.fromValues(208/255, 62/255, 25/255),
-            equatorColor: vec3.fromValues(208/255, 62/255, 25/255),
+            equatorColor: vec3.fromValues(208/255, 40/255, 15/255),
             southColor: vec3.fromValues(208/255, 62/255, 25/255)
         });
         mat4.translate(leftCherry.coordFrame, leftCherry.coordFrame,

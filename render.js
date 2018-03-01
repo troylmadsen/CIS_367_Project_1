@@ -49,8 +49,8 @@ function main() {
             projMat = mat4.create();
             gl.uniformMatrix4fv (projUnif, false, projMat);
             viewMat = mat4.lookAt(mat4.create(),
-                vec3.fromValues (19 * scale * 2, -4, -24 * scale * 2),  // eye coord
-                vec3.fromValues (19 * scale * 2, 0, -24 * scale * 2),  // gaze point
+                vec3.fromValues (0, -4, 0),  // eye coord
+                vec3.fromValues (0, 0, 0),  // gaze point
                 vec3.fromValues (0, 0, 1)   // Z is up
             );
             gl.uniformMatrix4fv (viewUnif, false, viewMat);
@@ -82,7 +82,9 @@ function createObjects() {
         radius: scale
     });
 
-    // let pacman = new PacMan(gl);
+    let pacman = new PacMan(gl, {
+        radius: scale
+    });
 
     let blinky = new Ghost(gl, {
         radius: scale,
@@ -90,42 +92,43 @@ function createObjects() {
         color: vec3.fromValues(208/255, 62/255, 25/255)
     });
     mat4.translate(blinky.coordFrame, blinky.coordFrame,
-        maze.getExternalMazeVec3(4, 2));
-
+        maze.getMazeVec3(4, 2));
 
     // Create a cherry object to add to the game.
     let cherryObject = new Cherries(gl, {
        radius: scale * Math.sqrt(2)
     });
     mat4.translate(cherryObject.coordFrame, cherryObject.coordFrame,
-        maze.getExternalMazeVec3(14, 10));
+        maze.getExternalMazeVec3(4, 7));
 
+    let pinky = new Ghost(gl, {
+        radius: scale,
+        numTails: 3,
+        color: vec3.fromValues(234/255, 130/255, 229/255)
+    });
+    mat4.translate(pinky.coordFrame, pinky.coordFrame,
+        maze.getMazeVec3(4, 3));
 
-    // let pinky = new Ghost(gl, {
-    //     radius: 0.25,
-    //     numTails: 3,
-    //     color: vec3.fromValues(234/255, 130/255, 229/255)
-    // });
-    // mat4.translate(pinky.coordFrame, pinky.coordFrame,
-    //     vec3.fromValues(0, 3 * 0.1 * Math.sqrt(2), -11 * 0.1 + 0.05));
-    //
-    // let inky = new Ghost(gl, {
-    //     radius: 0.25,
-    //     numTails: 4,
-    //     color: vec3.fromValues(70/255, 191/255, 238/255)
-    // });
-    // mat4.translate(inky.coordFrame, inky.coordFrame,
-    //     vec3.fromValues(0, 3 * 0.1 * Math.sqrt(2), -11 * 0.1 + 0.05));
-    //
-    // let clyde = new Ghost(gl, {
-    //     radius: 0.25,
-    //     numTails: 3,
-    //     color: vec3.fromValues(219/255, 133/255, 28/255)
-    // });
-    // mat4.translate(clyde.coordFrame, clyde.coordFrame,
-    //     vec3.fromValues(0, 3 * 0.1 * Math.sqrt(2), -11 * 0.1 + 0.05));
+    let inky = new Ghost(gl, {
+        radius: scale,
+        numTails: 4,
+        color: vec3.fromValues(70/255, 191/255, 238/255)
+    });
+    mat4.translate(inky.coordFrame, inky.coordFrame,
+        maze.getMazeVec3(4, 4));
 
-    allObjs.push(blinky, maze, cherryObject);
+    let clyde = new Ghost(gl, {
+        radius: scale,
+        numTails: 3,
+        color: vec3.fromValues(219/255, 133/255, 28/255)
+    });
+    mat4.translate(clyde.coordFrame, clyde.coordFrame,
+        maze.getMazeVec3(4, 5));
+
+    allObjs.push(maze, blinky, pinky, inky, clyde, cherryObject);
+
+    // allObjs.push(pacman);
+
 }
 
 function resizeWindow() {
