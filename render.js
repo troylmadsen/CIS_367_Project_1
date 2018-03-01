@@ -89,10 +89,17 @@ function createObjects() {
         numTails: 4,
         color: vec3.fromValues(208/255, 62/255, 25/255)
     });
-    // mat4.translate(blinky.coordFrame, blinky.coordFrame,
-    //     vec3.fromValues(0, 3 * 0.1 * Math.sqrt(2), -11 * 0.1 + 0.));
     mat4.translate(blinky.coordFrame, blinky.coordFrame,
-        maze.getMazeVec3(4, 2));
+        maze.getExternalMazeVec3(4, 2));
+
+
+    // Create a cherry object to add to the game.
+    let cherryObject = new Cherries(gl, {
+       radius: scale * Math.sqrt(2)
+    });
+    mat4.translate(cherryObject.coordFrame, cherryObject.coordFrame,
+        maze.getExternalMazeVec3(20, 13));
+
 
     // let pinky = new Ghost(gl, {
     //     radius: 0.25,
@@ -118,7 +125,7 @@ function createObjects() {
     // mat4.translate(clyde.coordFrame, clyde.coordFrame,
     //     vec3.fromValues(0, 3 * 0.1 * Math.sqrt(2), -11 * 0.1 + 0.05));
 
-    allObjs.push(blinky, maze);
+    allObjs.push(blinky, maze, cherryObject);
 }
 
 function resizeWindow() {
