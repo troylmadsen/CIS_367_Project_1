@@ -10,6 +10,12 @@ let projMat, viewMat;
 
 let scale = 0.05;
 
+let CAMERA_VIEW = mat4.fromValues(
+    0.9999695420265198, 0.0036164866760373116, -0.00727407680824399, 0,
+    -0.007842056453227997, 0.66341632604599, -0.748216450214386 ,  0,
+    0.0021192755084484816, 0.7482462525367737, 0.663423478603363, 0,
+    -0.09816265106201172, -0.9200894832611084, -7.7578864097595215,  1);
+
 function main() {
     canvas = document.getElementById("my-canvas");
 
@@ -53,6 +59,7 @@ function main() {
                 vec3.fromValues (0, 0, 0.1),        // Gaze Point
                 vec3.fromValues (0, 0, 1)           // Z is Up
             );
+            mat4.copy(viewMat, CAMERA_VIEW); // Set camera starting position
             gl.uniformMatrix4fv (viewUnif, false, viewMat);
 
             /* Recalculate New Viewport. */
@@ -107,11 +114,23 @@ function handleClick(event) {
     let deg;
     
     // For a variety of optional objects to be moved. Uses the top menu.
-    var ddl = document.getElementById("whichObject");
-    var selectedValue = ddl.options[ddl.selectedIndex].value;
+    let ddl = document.getElementById("whichObject");
+    let selectedValue = ddl.options[ddl.selectedIndex].value;
+
+    // Print the current camera location
+    if (key === 90) {
+        console.log("View Matrix: ", viewMat[0], ", ", viewMat[1], ",\n",
+            viewMat[2], ", ", viewMat[3], ",\n",
+            viewMat[4], ", ", viewMat[5], ",\n",
+            viewMat[6], ", ", viewMat[7], ",\n",
+            viewMat[8], ", ", viewMat[9], ",\n",
+            viewMat[10], ", ", viewMat[11], ",\n",
+            viewMat[12], ", ", viewMat[13], ",\n",
+            viewMat[14], ", ", viewMat[15], "\n");
+    }
     
     // If camera is selected to move. 
-    if (selectedValue == "camera") {
+    else if (selectedValue === "camera") {
         
         // With the camera selected, the arrow keys and the "WASD" keys allow
         // the user to move the camera.
@@ -176,20 +195,10 @@ function handleClick(event) {
                     0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
                 mat4.multiply(viewMat, rot, viewMat);
                 break;
-            case 90: // SPACE
-                console.log("View Matrix: ", viewMat[0], ", ", viewMat[1], ",\n",
-                                       viewMat[2], ", ", viewMat[3], ",\n",
-                                       viewMat[4], ", ", viewMat[5], ",\n",
-                                       viewMat[6], ", ", viewMat[7], ",\n",
-                                       viewMat[8], ", ", viewMat[9], ",\n",
-                                       viewMat[10], ", ", viewMat[11], ",\n",
-                                       viewMat[12], ", ", viewMat[13], ",\n",
-                                       viewMat[14], ", ", viewMat[15], "\n");
-                break;
         }
     
     // If Pacman is selected to move.
-    } else if (selectedValue == "pacman") {
+    } else if (selectedValue === "pacman") {
         
         // When selected, arrow keys move this character up, down, left, right
         // within the Pacman game screen.
@@ -210,7 +219,7 @@ function handleClick(event) {
         }
     
     // If Blinky is selected to move.
-    } else if (selectedValue == "blinky") {
+    } else if (selectedValue === "blinky") {
     
         // When selected, arrow keys move this character up, down, left, right
         // within the Pacman game screen.
@@ -234,6 +243,28 @@ function handleClick(event) {
     window.requestAnimFrame(drawScene);
 }
 
+function handleSelect(event) {
+    console.log("select");
+
+    // For a variety of optional objects to be moved. Uses the top menu.
+    let ddl = document.getElementById("whichObject");
+    let selectedValue = ddl.options[ddl.selectedIndex].value;
+
+    console.log(selectedValue);
+
+    if (selectedValue === "none") {
+        mat4.copy(viewMat, CAMERA_VIEW);
+    }
+    else if (selectedValue === "camera") {
+        mat4.copy(viewMat, CAMERA_VIEW);
+    }
+    else {
+
+    }
+
+    window.requestAnimFrame(drawScene);
+}
+
 /* Sets up the handlers for inputs. */
 function setupHandlers() {
     // Add listener for moving triangle with arrow keys.
@@ -241,4 +272,7 @@ function setupHandlers() {
 
     // Setup window resize listener.
     window.addEventListener('resize', resizeWindow);
+
+    // Add listener for select object
+    document.getElementById("whichObject").addEventListener("change", handleSelect);
 }
