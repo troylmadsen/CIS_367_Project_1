@@ -11,8 +11,12 @@ let projMat, viewMat;
 let scale = 0.05;
 
 let OBJ_CONSOLE;
-let OBJ_JOYSTICK;
+let OBJ_PACMAN;
 let OBJ_BLINKY;
+
+let OBJ_CONSOLE_POS = mat4.create();
+let OBJ_PACMAN_POS = mat4.create();
+let OBJ_BLINKY_POS = mat4.create();
 
 let CAMERA_VIEW = mat4.fromValues(
     0.9999695420265198, 0.0036164866760373116, -0.00727407680824399, 0,
@@ -118,8 +122,11 @@ function createObjects() {
     });
 
     OBJ_CONSOLE = console;
-    OBJ_JOYSTICK = console.group[6];
+    mat4.copy(OBJ_CONSOLE_POS, OBJ_CONSOLE.coordFrame);
+    OBJ_PACMAN = console.group[0].group[1];
+    mat4.copy(OBJ_PACMAN_POS, OBJ_PACMAN.coordFrame);
     OBJ_BLINKY = console.group[0].group[2];
+    mat4.copy(OBJ_BLINKY_POS, OBJ_BLINKY.coordFrame);
 
     allObjs.push(console);
 }
@@ -315,21 +322,24 @@ function handleClick(event) {
     
     // If Pacman is selected to move.
     } else if (selectedValue === "pacman") {
-        
-        // When selected, arrow keys move this character up, down, left, right
+        // When selected, wasd keys move this character up, down, left, right
         // within the Pacman game screen.
         switch (key) {
-            case 38: // UP
-                // TODO - move the character up one unit.
+            case 87: // W
+                trans[14] = trans[14] + scale;
+                mat4.multiply(OBJ_PACMAN.coordFrame, trans, OBJ_PACMAN.coordFrame);
                 break;
-            case 40: // DOWN
-                // TODO - move the character down one unit.
+            case 65: // A
+                trans[12] = trans[12] - scale;
+                mat4.multiply(OBJ_PACMAN.coordFrame, trans, OBJ_PACMAN.coordFrame);
                 break;
-            case 37: // LEFT
-                // TODO - move the character left one unit.
+            case 83: // S
+                trans[14] = trans[14] - scale;
+                mat4.multiply(OBJ_PACMAN.coordFrame, trans, OBJ_PACMAN.coordFrame);
                 break;
-            case 39: // RIGHT
-                // TODO - move the character right one unit. 
+            case 68: // D
+                trans[12] = trans[12] + scale;
+                mat4.multiply(OBJ_PACMAN.coordFrame, trans, OBJ_PACMAN.coordFrame);
                 break;
                 
             /* For the changing of camera view. */ 
@@ -346,21 +356,24 @@ function handleClick(event) {
     
     // If Blinky is selected to move.
     } else if (selectedValue === "blinky") {
-    
-        // When selected, arrow keys move this character up, down, left, right
+        // When selected, wasd keys move this character up, down, left, right
         // within the Pacman game screen.
         switch (key) {
-            case 38: // UP
-                // TODO - move the character up one unit.
+            case 87: // W
+                trans[14] = trans[14] + scale;
+                mat4.multiply(OBJ_BLINKY.coordFrame, trans, OBJ_BLINKY.coordFrame);
                 break;
-            case 40: // DOWN
-                // TODO - move the character down one unit.
+            case 65: // A
+                trans[12] = trans[12] - scale;
+                mat4.multiply(OBJ_BLINKY.coordFrame, trans, OBJ_BLINKY.coordFrame);
                 break;
-            case 37: // LEFT
-                // TODO - move the character left one unit.
+            case 83: // S
+                trans[14] = trans[14] - scale;
+                mat4.multiply(OBJ_BLINKY.coordFrame, trans, OBJ_BLINKY.coordFrame);
                 break;
-            case 39: // RIGHT
-                // TODO - move the character right one unit. 
+            case 68: // D
+                trans[12] = trans[12] + scale;
+                mat4.multiply(OBJ_BLINKY.coordFrame, trans, OBJ_BLINKY.coordFrame);
                 break;
             
             /* For the changing of camera view. */    
@@ -379,14 +392,24 @@ function handleClick(event) {
     window.requestAnimFrame(drawScene);
 }
 
+/**
+ * Reset the position of the objects
+ */
+function resetPos() {
+    mat4.copy(OBJ_CONSOLE.coordFrame, OBJ_CONSOLE_POS);
+    mat4.copy(OBJ_PACMAN.coordFrame, OBJ_PACMAN_POS);
+    mat4.copy(OBJ_BLINKY.coordFrame, OBJ_BLINKY_POS);
+}
+
 function handleSelect(event) {
     // For a variety of optional objects to be moved. Uses the top menu.
     let ddl = document.getElementById("whichObject");
     let selectedValue = ddl.options[ddl.selectedIndex].value;
 
+    resetPos();
+
     if (selectedValue === "none") {
         mat4.copy(viewMat, CAMERA_VIEW);
-        mat4.copy(OBJ_CONSOLE.coordFrame, mat4.create());
     }
     else if (selectedValue === "console") {
         mat4.copy(viewMat, CAMERA_VIEW);
