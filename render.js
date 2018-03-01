@@ -128,6 +128,74 @@ function handleClick(event) {
             viewMat[12], ", ", viewMat[13], ",\n",
             viewMat[14], ", ", viewMat[15], "\n");
     }
+
+    // none is selected for free move
+    else if (selectedValue === "none") {
+        // With the camera selected, the arrow keys and the "WASD" keys allow
+        // the user to move the camera.
+        switch (key) {
+            case 87: // W
+                trans[14] = trans[14] + speed;
+                mat4.multiply(viewMat, trans, viewMat);
+                break;
+            case 65: // A
+                deg = -1;
+                rot = mat4.fromValues(Math.cos(glMatrix.toRadian(deg)),
+                    0, -1 * Math.sin(glMatrix.toRadian(deg)), 0, 0, 1, 0, 0,
+                    Math.sin(glMatrix.toRadian(deg)), 0,
+                    Math.cos(glMatrix.toRadian(deg)), 0, 0, 0, 0, 1);
+                mat4.multiply(viewMat, rot, viewMat);
+                break;
+            case 83: // S
+                trans[14] = trans[14] - speed;
+                mat4.multiply(viewMat, trans, viewMat);
+                break;
+            case 68: // D
+                deg = 1;
+                rot = mat4.fromValues(Math.cos(glMatrix.toRadian(deg)),
+                    0, -1 * Math.sin(glMatrix.toRadian(deg)), 0, 0, 1, 0, 0,
+                    Math.sin(glMatrix.toRadian(deg)), 0,
+                    Math.cos(glMatrix.toRadian(deg)), 0, 0, 0, 0, 1);
+                mat4.multiply(viewMat, rot, viewMat);
+                break;
+            case 38: // UP
+                deg = -1;
+                rot = mat4.fromValues(1, 0, 0, 0, 0,
+                    Math.cos(glMatrix.toRadian(deg)),
+                    Math.sin(glMatrix.toRadian(deg)), 0, 0,
+                    -1 * Math.sin(glMatrix.toRadian(deg)),
+                    Math.cos(glMatrix.toRadian(deg)), 0, 0, 0, 0, 1);
+                mat4.multiply(viewMat, rot, viewMat);
+                break;
+            case 37: // LEFT
+                deg = -1;
+                rot = mat4.fromValues(Math.cos(glMatrix.toRadian(deg)),
+                    Math.sin(glMatrix.toRadian(deg)), 0, 0,
+                    -1 * Math.sin(glMatrix.toRadian(deg)),
+                    Math.cos(glMatrix.toRadian(deg)),
+                    0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
+                mat4.multiply(viewMat, rot, viewMat);
+                break;
+            case 40: // DOWN
+                deg = 1;
+                rot = mat4.fromValues(1, 0, 0, 0, 0,
+                    Math.cos(glMatrix.toRadian(deg)),
+                    Math.sin(glMatrix.toRadian(deg)), 0, 0,
+                    -1 * Math.sin(glMatrix.toRadian(deg)),
+                    Math.cos(glMatrix.toRadian(deg)), 0, 0, 0, 0, 1);
+                mat4.multiply(viewMat, rot, viewMat);
+                break;
+            case 39: // RIGHT
+                deg = 1;
+                rot = mat4.fromValues(Math.cos(glMatrix.toRadian(deg)),
+                    Math.sin(glMatrix.toRadian(deg)), 0, 0,
+                    -1 * Math.sin(glMatrix.toRadian(deg)),
+                    Math.cos(glMatrix.toRadian(deg)),
+                    0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
+                mat4.multiply(viewMat, rot, viewMat);
+                break;
+        }
+    }
     
     // If camera is selected to move. 
     else if (selectedValue === "camera") {
