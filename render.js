@@ -176,6 +176,16 @@ function handleClick(event) {
                     0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
                 mat4.multiply(viewMat, rot, viewMat);
                 break;
+            case 90: // SPACE
+                console.log("View Matrix: ", viewMat[0], ", ", viewMat[1], ",\n",
+                                       viewMat[2], ", ", viewMat[3], ",\n",
+                                       viewMat[4], ", ", viewMat[5], ",\n",
+                                       viewMat[6], ", ", viewMat[7], ",\n",
+                                       viewMat[8], ", ", viewMat[9], ",\n",
+                                       viewMat[10], ", ", viewMat[11], ",\n",
+                                       viewMat[12], ", ", viewMat[13], ",\n",
+                                       viewMat[14], ", ", viewMat[15], "\n");
+                break;
         }
     
     // If Pacman is selected to move.
