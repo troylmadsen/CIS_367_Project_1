@@ -98,7 +98,7 @@ function createObjects() {
        radius: scale * Math.sqrt(2)
     });
     mat4.translate(cherryObject.coordFrame, cherryObject.coordFrame,
-        maze.getExternalMazeVec3(20, 13));
+        maze.getExternalMazeVec3(14, 10));
 
 
     // let pinky = new Ghost(gl, {

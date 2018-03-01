@@ -13,8 +13,19 @@ class Cherries extends ObjectGroup {
     constructor(gl, props) {
         super(gl);
 
-        // Left cherry
-        // todo - translate this
+        // Right cherry
+        let rightCherry = new Sphere(gl, {
+            radius: props.radius * 0.4,
+            splitDepth: 5,
+            northColor: vec3.fromValues(208/255, 62/255, 25/255),
+            equatorColor: vec3.fromValues(208/255, 62/255, 25/255),
+            southColor: vec3.fromValues(208/255, 62/255, 25/255)
+        });
+        mat4.translate(rightCherry.coordFrame, rightCherry.coordFrame,
+            vec3.fromValues(0, 0.4 * props.radius, 0.08 * props.radius));
+        this.group.push(rightCherry);
+
+        // Smaller left cherry
         let leftCherry = new Sphere(gl, {
             radius: props.radius * 0.3,
             splitDepth: 5,
@@ -23,55 +34,36 @@ class Cherries extends ObjectGroup {
             southColor: vec3.fromValues(208/255, 62/255, 25/255)
         });
         mat4.translate(leftCherry.coordFrame, leftCherry.coordFrame,
-            vec3.fromValues(0, 0.3 * props.radius, 0.5 * props.radius));
+            vec3.fromValues(0, -0.15 * props.radius, -0.05 * props.radius));
         this.group.push(leftCherry);
 
-        // Smaller right cherry
-        // todo - Translate this
-        let rightCherry = new Sphere(gl, {
-            radius: props.radius * 0.2,
-            splitDepth: 5,
-            northColor: vec3.fromValues(208/255, 62/255, 25/255),
-            equatorColor: vec3.fromValues(208/255, 62/255, 25/255),
-            southColor: vec3.fromValues(208/255, 62/255, 25/255)
-        });
-        mat4.translate(rightCherry.coordFrame, rightCherry.coordFrame,
-            vec3.fromValues(0, -0.2 * props.radius, 0.5 * props.radius));
-        this.group.push(rightCherry);
-
         // Left stem
-        // todo - translate this, rotate this
         let leftStem = new PolygonalPrism(gl, {
-            topRadius: props.radius * 0.02,
-            bottomRadius: props.radius * 0.02,
+            topRadius: props.radius * 0.03,
+            bottomRadius: props.radius * 0.03,
             numSides: 20,
-            height: props.radius * 0.3,
+            height: props.radius * 0.5,
             topColor: vec3.fromValues(.2, .4, 0),
             bottomColor: vec3.fromValues(.2, .4, 0)
         });
         mat4.translate(leftStem.coordFrame, leftStem.coordFrame,
-            vec3.fromValues(0, 0, 0.3 * props.radius));
+            vec3.fromValues(0, -0.1 * props.radius, 0.1 * props.radius));
+        mat4.rotateX(leftStem.coordFrame, leftStem.coordFrame, glMatrix.toRadian(-20));
         this.group.push(leftStem);
 
         // Right stem
-        // TODO - translate this, rotate this
         let rightStem = new PolygonalPrism(gl, {
-            topRadius: props.radius * 0.02,
-            bottomRadius: props.radius * 0.02,
+            topRadius: props.radius * 0.03,
+            bottomRadius: props.radius * 0.03,
             numSides: 20,
-            height: props.radius * 0.3,
+            height: props.radius * 0.5,
             topColor: vec3.fromValues(.2, .4, 0),
             bottomColor: vec3.fromValues(.2, .4, 0)
         });
         mat4.translate(rightStem.coordFrame, rightStem.coordFrame,
-            vec3.fromValues(0, 0, 0.3 * props.radius));
+            vec3.fromValues(0, 0.25 * props.radius, 0.3 * props.radius));
+        mat4.rotateX(rightStem.coordFrame, rightStem.coordFrame, glMatrix.toRadian(20));
         this.group.push(rightStem);
-
-        // Left stem top
-        // todo - Add a small nub
-
-        // Right stem top
-        // todo - Add a small nub
 
         // Rotating to face camera
         mat4.rotateZ(this.coordFrame, this.coordFrame,
