@@ -61,7 +61,9 @@ class Screen extends ObjectGroup {
             radius: scale * Math.sqrt(2)
         });
         mat4.translate(cherry.coordFrame, cherry.coordFrame,
-            maze.getExternalMazeVec3(4, 9));
+            maze.getMazeVec3(4, 9));
+        mat4.translate(cherry.coordFrame, cherry.coordFrame,
+            vec3.fromValues(0, 0, -0.05));
 
         this.group.push(maze, pacman, blinky, pinky, inky, clyde, cherry);
 

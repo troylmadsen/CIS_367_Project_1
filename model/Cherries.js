@@ -65,9 +65,9 @@ class Cherries extends ObjectGroup {
         mat4.rotateX(rightStem.coordFrame, rightStem.coordFrame, glMatrix.toRadian(20));
         this.group.push(rightStem);
 
-        // Rotating to face camera
-        mat4.rotateZ(this.coordFrame, this.coordFrame,
-            glMatrix.toRadian(-90));
+        // // Rotating to face camera
+        // mat4.rotateZ(this.coordFrame, this.coordFrame,
+        //     glMatrix.toRadian(-90));
         // Shifting center up to fit within maze
         mat4.translate(this.coordFrame, this.coordFrame,
             vec3.fromValues(0, 0, 3 * props.radius / 2));
